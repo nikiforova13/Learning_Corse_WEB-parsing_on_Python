@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-from constants import TABLE_TASK1
+from constants import TABLE_TASK3
 
 
 class TableParses:
@@ -27,4 +27,4 @@ class TableParses:
 
 
 a = TableParses()
-print(a.sum_tr_td(TABLE_TASK1))
+print(a.sum_tr_td(TABLE_TASK3))

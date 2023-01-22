@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from constants import ARTICLES
+from constants import ARTICLES_TASK1
 
 
 class ArticleProduct:
@@ -98,4 +98,4 @@ class ArticleProduct:
 
 if __name__ == "__main__":
     a = ArticleProduct()
-    print(a.find_sum_article(ARTICLES))
+    print(a.find_sum_article(ARTICLES_TASK1))
