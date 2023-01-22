@@ -1,22 +1,10 @@
-from bs4 import BeautifulSoup
-import requests
-
+from base_class import BaseClass
 from constants import TABLE_TASK3
 
 
-class TableParses:
-    def send_get_requst(self, link):
-        """
-        Отправка запроса и получение содержимого ответа
-        """
-        self.current_url = link
-        response = requests.get(url=self.current_url)
-        response.encoding = "utf-8"
-        soup = BeautifulSoup(response.text, "lxml")
-        return soup
-
+class Table(BaseClass):
     def search_tr_td(self, link):
-        elements = [i.text for i in self.send_get_requst(link).find_all('td')]
+        elements = [i.text for i in self.send_requst_and_reply(link).find_all("td")]
         return set(elements)
 
     def sum_tr_td(self, link):
@@ -26,5 +14,5 @@ class TableParses:
         return sum
 
 
-a = TableParses()
+a = Table()
 print(a.sum_tr_td(TABLE_TASK3))

@@ -1,29 +1,24 @@
-import requests
-from bs4 import BeautifulSoup
-
+from base_class import BaseClass
 from constants import TABLE_TASK6
 
 
-class TableParsesGreenandBlueElements:
-    def send_get_requst(self, link):
-        """
-        Отправка запроса и получение содержимого ответа
-        """
-        self.current_url = link
-        response = requests.get(url=self.current_url)
-        response.encoding = "utf-8"
-        soup = BeautifulSoup(response.text, "lxml")
-        return soup
-
+class Table(BaseClass):
     def searching_green_elements_in_the_table(self, link):
-        orange_elements = [float(find_element.text) for find_element in
-                           self.send_get_requst(link).find_all('td', class_='orange')]
+        orange_elements = [
+            float(find_element.text)
+            for find_element in self.send_requst_and_reply(link).find_all(
+                "td", class_="orange"
+            )
+        ]
         return orange_elements
 
     def searching_blue_elements_in_the_table(self, link):
         count = 0
         new_blue_elements = []
-        blue_elements = [float(find_element.text) for find_element in self.send_get_requst(link).find_all('td')]
+        blue_elements = [
+            float(find_element.text)
+            for find_element in self.send_requst_and_reply(link).find_all("td")
+        ]
         for current_element in blue_elements:
             count += 1
             if count == 15:
@@ -33,11 +28,14 @@ class TableParsesGreenandBlueElements:
 
     def multiplication_and_sum_elements(self, link):
         multiplication_elements = []
-        for orange, blue in zip(self.searching_green_elements_in_the_table(link), self.searching_blue_elements_in_the_table(link)):
-            multiplication_elements.append(orange*blue)
+        for orange, blue in zip(
+            self.searching_green_elements_in_the_table(link),
+            self.searching_blue_elements_in_the_table(link),
+        ):
+            multiplication_elements.append(orange * blue)
         return sum(multiplication_elements)
 
 
-a = TableParsesGreenandBlueElements()
+a = Table()
 # print(a.searching_green_elements_in_the_table(TABLE_TASK6))
 print(a.multiplication_and_sum_elements(TABLE_TASK6))
