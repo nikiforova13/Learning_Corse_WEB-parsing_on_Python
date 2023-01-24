@@ -1,4 +1,4 @@
-from base_class import BaseClass
+from parses_table_tasks.base_class import BaseClass
 from constants import TABLE_TASK4
 
 
