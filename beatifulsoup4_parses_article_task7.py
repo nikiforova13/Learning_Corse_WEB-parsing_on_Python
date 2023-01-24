@@ -12,31 +12,32 @@ class Table(BaseClass):
         elements_headers = {}
         for i in elements_headers_columns:
             elements_headers[i] = 0
-        print("СЛоварь такой", elements_headers)
         return elements_headers
 
     def elements_columns(self, link):
+        elements_columns = []
+        for i in range(1, 16):
+            elements = [
+                find_element.text.split("\n")[i]
+                for find_element in self.send_requst_and_reply(link).find_all("tr")[1::]
+            ]
+            elements_columns.append(list(map(float, elements)))
+        return elements_columns
 
-        elements = [
-            find_element.text.split("\n")
-            for find_element in self.send_requst_and_reply(link).find_all("tr")[1::]
-        ]
-        print(elements)
+    def find_sum_and_round(self, link):
+        elements = []
+        for i in self.elements_columns(link):
+            elements.append(round(sum(i), 3))
         return elements
 
-    def f(self, link):
-        count = 0
-        for current_element in self.elements_columns(link):
-            print(current_element)
-            for j in current_element:
-                print(j)
-                count += 1
-                (self.search_headers_columns(link))[f"{count} column"] = j
-                print("dsaaaaaaa", count)
-                if count == 16:
-                    count = 0
+    def generate_dict_with_data(self, link):
+        data = {}
+        for current_column, current_sum in zip(
+            self.search_headers_columns(link), self.find_sum_and_round(link)
+        ):
+            data[current_column] = current_sum
+        return data
 
 
 a = Table()
-# print(a.search_headers_columns(TABLE_TASK7))
-print(a.f(TABLE_TASK7))
+print(a.generate_dict_with_data(TABLE_TASK7))
