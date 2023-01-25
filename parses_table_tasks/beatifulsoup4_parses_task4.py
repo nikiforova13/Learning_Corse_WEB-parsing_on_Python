@@ -1,5 +1,5 @@
-from parses_table_tasks.base_class import BaseClass
 from constants import TABLE_TASK4
+from parses_table_tasks.base_class import BaseClass
 
 
 class Product(BaseClass):

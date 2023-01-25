@@ -1,5 +1,5 @@
-from parses_table_tasks.base_class import BaseClass
 from constants import TABLE_TASK5
+from parses_table_tasks.base_class import BaseClass
 
 
 class Table(BaseClass):

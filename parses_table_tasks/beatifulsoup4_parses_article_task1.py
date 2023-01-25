@@ -1,4 +1,5 @@
 from base_class import BaseClass
+
 from constants import ARTICLES_TASK1
 
 
