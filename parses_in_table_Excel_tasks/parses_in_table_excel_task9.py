@@ -63,13 +63,13 @@ class Product:
         return names_products
 
     def get_description(self, link):
-        desctiption_products = [
+        description_products = [
             current_description.text.strip().split("\n")
             for current_description in self.send_requst_and_reply(link).find_all(
                 "div", class_="description"
             )
         ]
-        return desctiption_products
+        return description_products
 
     def get_price(self, link):
         price_products = [
