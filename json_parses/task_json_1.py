@@ -17,7 +17,7 @@ class Watch:
         reply = BeautifulSoup(response.text, "lxml")
         return reply
 
-    def open_file(self, name_file):
+    def open_and_write_file(self, name_file):
         with open("task_json_1.json", "w", encoding="utf-8") as f:
             json.dump(name_file, f, indent=4, ensure_ascii=False)
         return "Файл закрыт"
@@ -69,7 +69,7 @@ class Watch:
         return result_json
 
     def write_to_file(self, link):
-        self.open_file(self.full_description(link))
+        self.open_and_write_file(self.full_description(link))
         return "Запись произведена успешно"
 
 
