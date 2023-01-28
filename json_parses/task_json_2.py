@@ -72,7 +72,6 @@ class Product(BaseClass):
                 description_products = {}
                 print("Текущий продукт и его описание", description_current_product)
                 for element_description in description_current_product:
-                    description_products["Наименование: "] = name[0]
                     description_products["Цена: "] = price[0]
                     element_description = element_description.split(":")
                     description_products[element_description[0]] = element_description[
