@@ -28,13 +28,21 @@ class Product:
         ]
         return path
 
-    def search_elem_by_all_tegs(self, link, teg, class_for_search):
-        path = [
-            current_path.text.strip().split("\n")
-            for current_path in self.send_requst_and_reply(link).find_all(
-                teg, class_=class_for_search
-            )
-        ]
+    def search_elem_by_all_tegs(self, link,  teg, class_for_search, teg2=None):
+        if teg2 == None:
+            path = [
+                current_path.text.strip().split("\n")
+                for current_path in self.send_requst_and_reply(link).find_all(
+                    teg, class_=class_for_search
+                )
+            ]
+        else:
+            path = [
+                current_path[teg2]
+                for current_path in self.send_requst_and_reply(link).find_all(
+                    teg, class_=class_for_search
+                )
+            ]
         return path
 
     def build_link_category_and_build(self, link):
@@ -60,11 +68,12 @@ class Product:
             current_description = self.search_elem_by_all_tegs(
                 current_link, "div", "description"
             )
+            links_products = self.search_elem_by_all_tegs(current_link, 'a', 'name_item', 'href')
 
-            for description_current_product, name, price in zip(
+            for description_current_product, name, price, link_product in zip(
                 current_description,
                 (name for name in names),
-                (price for price in prices_products),
+                (price for price in prices_products), (link_product for link_product in links_products )
             ):
                 description_products = {}
                 print("Текущий продукт и его описание", description_current_product)
@@ -75,6 +84,8 @@ class Product:
                     description_products[element_description[0]] = element_description[
                         1
                     ].strip()
+                    description_products["Ссылка: "] = link[:26] + link_product
+
                 result_json.append(description_products)
 
         return result_json
