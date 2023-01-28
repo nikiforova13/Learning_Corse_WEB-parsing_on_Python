@@ -1,5 +1,4 @@
 from base_class import BaseClass
-
 from constants import TABLE_TASK3
 
 

@@ -1,5 +1,5 @@
+from base_class import BaseClass
 from constants import TABLE_TASK4
-from parses_table_tasks_Beatiful_soup.base_class import BaseClass
 
 
 class Product(BaseClass):

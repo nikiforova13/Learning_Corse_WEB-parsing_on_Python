@@ -1,19 +1,10 @@
 import json
 
-import requests
-from bs4 import BeautifulSoup
-
+from base_class import BaseClass
 from constants import JSON_TASK2
 
 
-class Product:
-    def send_requst_and_reply(self, link):
-        self.current_url = link
-        response = requests.get(url=self.current_url)
-        response.encoding = "utf-8"
-        reply = BeautifulSoup(response.text, "lxml")
-        return reply
-
+class Product(BaseClass):
     def open_and_write_json_file(self, name_file):
         with open("file_task2.json", "w", encoding="utf-8") as f:
             json.dump(name_file, f, indent=4, ensure_ascii=False)
@@ -28,7 +19,7 @@ class Product:
         ]
         return path
 
-    def search_elem_by_all_tegs(self, link,  teg, class_for_search, teg2=None):
+    def search_elem_by_all_tegs(self, link, teg, class_for_search, teg2=None):
         if teg2 == None:
             path = [
                 current_path.text.strip().split("\n")
@@ -49,12 +40,12 @@ class Product:
         link_categories = []
         link_pages_all_products = []
         for category in self.path_category_and_page(
-            link, "href", "div", "nav_menu", "a"
+                link, "href", "div", "nav_menu", "a"
         ):
             link_categories.append(link[:26] + category)
         for current_category in link_categories:
             for current_page in self.path_category_and_page(
-                current_category, "href", "div", "pagen", "a"
+                    current_category, "href", "div", "pagen", "a"
             ):
                 link_pages_all_products.append(current_category[:26] + current_page)
         return link_pages_all_products
@@ -68,12 +59,15 @@ class Product:
             current_description = self.search_elem_by_all_tegs(
                 current_link, "div", "description"
             )
-            links_products = self.search_elem_by_all_tegs(current_link, 'a', 'name_item', 'href')
+            links_products = self.search_elem_by_all_tegs(
+                current_link, "a", "name_item", "href"
+            )
 
             for description_current_product, name, price, link_product in zip(
-                current_description,
-                (name for name in names),
-                (price for price in prices_products), (link_product for link_product in links_products )
+                    current_description,
+                    (name for name in names),
+                    (price for price in prices_products),
+                    (link_product for link_product in links_products),
             ):
                 description_products = {}
                 print("Текущий продукт и его описание", description_current_product)

@@ -1,7 +1,7 @@
 import csv
 
+from base_class import BaseClass
 from constants import TABLE_TASK8
-from parses_table_tasks_Beatiful_soup.base_class import BaseClass
 
 
 class HDD(BaseClass):
